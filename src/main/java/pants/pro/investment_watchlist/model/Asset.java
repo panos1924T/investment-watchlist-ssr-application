@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "assets")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-public class Asset {
+public class Asset extends AbstractEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
