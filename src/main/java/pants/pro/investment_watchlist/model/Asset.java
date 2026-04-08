@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pants.pro.investment_watchlist.model.enums.RiskLevel;
+import pants.pro.investment_watchlist.core.enums.RiskLevel;
 
 import java.math.BigDecimal;
 import java.util.UUID;

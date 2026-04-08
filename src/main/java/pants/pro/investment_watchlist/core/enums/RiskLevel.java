@@ -1,4 +1,4 @@
-package pants.pro.investment_watchlist.model.enums;
+package pants.pro.investment_watchlist.core.enums;
 
 public enum RiskLevel {
     LOW,
