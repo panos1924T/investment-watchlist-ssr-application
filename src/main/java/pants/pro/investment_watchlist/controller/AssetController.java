@@ -35,7 +35,7 @@ public class AssetController {
             return "asset-insert";
         }
 
-        AssetReadOnlyDTO assetReadOnlyDTO = new AssetReadOnlyDTO("abc123", "Apple", "APPL");
+        AssetReadOnlyDTO assetReadOnlyDTO = new AssetReadOnlyDTO("abc123", "Apple");
         redirectAttributes.addFlashAttribute("assetReadOnlyDTO", assetReadOnlyDTO);
         return "redirect:/assets/success";
     }

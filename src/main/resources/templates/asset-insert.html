@@ -33,15 +33,7 @@
       <div class="row">
 
         <div class="col-lg-6 min-height-100">
-          <label th:for="name">Company name:</label><br>
-          <input type="text" th:field="*{name}"/>
-          <div th:if="${#fields.hasErrors('name')}">
-            <p class="error" th:errors="*{name}"></p>
-          </div>
-        </div>
-
-        <div class="col-lg-6 min-height-100">
-          <label for="ticker">ticker: </label><br>
+          <label for="ticker">Ticker: </label><br>
           <input type="text" id="ticker" th:field="*{ticker}"/>
           <div th:if="${#fields.hasErrors('ticker')}">
             <p class="error" th:errors="*{ticker}"></p>
@@ -49,15 +41,31 @@
         </div>
 
         <div class="col-lg-6 min-height-100">
-          <label for="assetType">Asset Type:</label><br>
-          <select name="" id="assetType" th:field="*{assetTypeId}">
-            <option value="" selected>Select Asset Type</option>
-            <option th:each="assetType : ${assetTypeReadOnlyDTO}" th:value="${assetType.id}" th:text="${assetType.name}"></option>
-          </select>
-          <div th:if="${#fields.hasErrors('assetTypeId')}">
-            <p class="error" th:errors="*{assetTypeId}"></p>
+          <label th:for="quantity">Number of shares:</label><br>
+          <input type="text" th:field="*{quantity}"/>
+          <div th:if="${#fields.hasErrors('quantity')}">
+            <p class="error" th:errors="*{quantity}"></p>
           </div>
         </div>
+
+        <div class="col-lg-6 min-height-100">
+          <label th:for="purchasePrice">Purchase Price:</label><br>
+          <input type="text" th:field="*{purchasePrice}"/>
+          <div th:if="${#fields.hasErrors('purchasePrice')}">
+            <p class="error" th:errors="*{purchasePrice}"></p>
+          </div>
+        </div>
+
+<!--        <div class="col-lg-6 min-height-100">-->
+<!--          <label for="assetType">Asset Type:</label><br>-->
+<!--          <select name="" id="assetType" th:field="*{assetTypeId}">-->
+<!--            <option value="" selected>Select Asset Type</option>-->
+<!--            <option th:each="assetType : ${assetTypeReadOnlyDTO}" th:value="${assetType.id}" th:text="${assetType.name}"></option>-->
+<!--          </select>-->
+<!--          <div th:if="${#fields.hasErrors('assetTypeId')}">-->
+<!--            <p class="error" th:errors="*{assetTypeId}"></p>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
 
       <div class="row">
