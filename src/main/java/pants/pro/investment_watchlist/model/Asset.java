@@ -27,8 +27,8 @@ public class Asset extends AbstractEntity{
     @Column(nullable = false, precision = 18, scale = 2)
     private BigDecimal purchasePrice;
 
-    @Column(precision = 18, scale = 2)
-    private BigDecimal currentPrice;
+    @Column(nullable = false, precision = 18, scale = 2)
+    private BigDecimal quantity;
 
     @PrePersist
     public void initializeUuid() {
