@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.naming.ldap.UnsolicitedNotification;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -21,7 +22,7 @@ public class Asset extends AbstractEntity{
     @Column(unique = true, nullable = false)
     private UUID uuid;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, unique = true , length = 10)
     private String ticker;
 
     @Column(nullable = false, precision = 18, scale = 2)
