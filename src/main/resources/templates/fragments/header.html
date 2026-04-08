@@ -1,40 +1,28 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-</head>
-<body>
-<div th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" th:href="@{/}">Investment Watchlist</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/assets/search}">Assets</a>
-                    </li>
-                </ul>
-                <form class="d-flex" method="GET" th:action="@{/assets/search}">
-                    <input class="form-control me-2" type="search" name="ticker" placeholder="Search by Ticker" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-
-                <ul class="navbar-nav ms-3">
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <form th:action="@{/logout}" method="POST">
-                            <button class="btn btn-sm btn-secondary" type="submit">Logout</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
+<header th:fragment="headerFragment"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/springsecurity">
+    <div class="outer">
+        <div class="items">
+            <a th:href="@{/}">
+                <img class="gov-gr-logo" th:src="@{/img/gov_header_logo.svg}"
+                     alt="Government Logo" width="40" height="auto">
+            </a>
+            <span class="title">Investment Watchlist Reinvented</span>
         </div>
-    </nav>
-</div>
-</body>
-</html>
+        <div class="login-name">
+            <span sec:authorize="isAuthenticated()" th:text="${#authentication.name}"></span>
+
+            <form sec:authorize="isAuthenticated()"
+                  th:action="@{/logout}"
+                  method="post"
+                  style="display: inline"
+            >
+                <button type="submit" class="log-out" style="background: none; border: none; padding: 0; cursor: pointer">
+                    Έξοδος
+                </button>
+            </form>
+            <!--            <a class="log-out" sec:authorize="isAuthenticated()" th:href="@{/logout}" >Έξοδος</a>-->
+        </div>
+    </div>
+    <div class="line"></div>
+</header>
