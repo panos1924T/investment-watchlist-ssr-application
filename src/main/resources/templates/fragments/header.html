@@ -5,24 +5,24 @@
         <div class="items">
             <a th:href="@{/}">
                 <img class="header-gr-logo" th:src="@{/img/header_logo.webp}"
-                     alt="Investment Logo" width="40" height="auto">
+                     alt="Investment Logo" width="80" height="auto">
             </a>
             <span class="title">Investment Watchlist Reinvented</span>
         </div>
-        <div class="login-name">
-            <span sec:authorize="isAuthenticated()" th:text="${#authentication.name}"></span>
+<!--        <div class="login-name">-->
+<!--            <span sec:authorize="isAuthenticated()" th:text="${#authentication.name}"></span>-->
 
-            <form sec:authorize="isAuthenticated()"
-                  th:action="@{/logout}"
-                  method="post"
-                  style="display: inline"
-            >
-                <button type="submit" class="log-out" style="background: none; border: none; padding: 0; cursor: pointer">
-                    Έξοδος
-                </button>
-            </form>
-            <!--            <a class="log-out" sec:authorize="isAuthenticated()" th:href="@{/logout}" >Έξοδος</a>-->
-        </div>
+<!--            <form sec:authorize="isAuthenticated()"-->
+<!--                  th:action="@{/logout}"-->
+<!--                  method="post"-->
+<!--                  style="display: inline"-->
+<!--            >-->
+<!--                <button type="submit" class="log-out" style="background: none; border: none; padding: 0; cursor: pointer">-->
+<!--                    Έξοδος-->
+<!--                </button>-->
+<!--            </form>-->
+<!--            &lt;!&ndash;            <a class="log-out" sec:authorize="isAuthenticated()" th:href="@{/logout}" >Έξοδος</a>&ndash;&gt;-->
+<!--        </div>-->
     </div>
     <div class="line"></div>
 </header>
