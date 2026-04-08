@@ -52,7 +52,7 @@ input[type=text] {
 .error {
     min-height: 1.2em;
     color: var(--color-dark-red);
-    background: var(--color-light-red;
+    background: var(--color-light-red);
     border: 1px solid var(--color-gray-red);
     padding: 0.5rem 0.75rem;
     border-radius: 4px;
