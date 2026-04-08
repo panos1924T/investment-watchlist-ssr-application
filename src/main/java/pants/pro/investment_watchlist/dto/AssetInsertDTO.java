@@ -15,4 +15,8 @@ public record AssetInsertDTO(
         @NotNull(message = "Asset Type must not be null!")
         Long assetTypeId
 ) {
+
+    public static AssetInsertDTO empty() {
+        return new AssetInsertDTO("", "", 0L);
+    }
 }
