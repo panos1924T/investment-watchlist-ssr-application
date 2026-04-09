@@ -35,6 +35,7 @@ public class AnalystService implements IAnalystService {
                     .orElseThrow(() -> new EntityInvalidArgumentException("Firm with id=" + dto.firmId() + " invalid."));
 
             Analyst savedAnalyst = mapper.toAnalystEntity(dto);
+            firm.addAnalyst(savedAnalyst);
             analystRepository.save(savedAnalyst);
             log.info("Asset with ticker={} saved successfully!", dto.email());
             return mapper.toReadOnlyDTO(savedAnalyst);
