@@ -35,7 +35,7 @@ public class AnalystController {
             return "analyst-insert";
         }
 
-        AnalystReadOnlyDTO analystReadOnlyDTO = new AnalystReadOnlyDTO("abc123", "Apple");
+        AnalystReadOnlyDTO analystReadOnlyDTO = new AnalystReadOnlyDTO("abc123", "Panos", "Tsitsikas", "abc@gmail.gr", "JP Morgan");
         redirectAttributes.addFlashAttribute("assetReadOnlyDTO", analystReadOnlyDTO);
         return "redirect:/assets/success";
     }

@@ -15,6 +15,9 @@ public class Mapper {
     public AnalystReadOnlyDTO toReadOnlyDTO(Analyst analyst) {
         return new AnalystReadOnlyDTO(
                 analyst.getUuid().toString(),
+                analyst.getEmail(),
+                analyst.getFirstname(),
+                analyst.getLastname(),
                 analyst.getEmail()
         );
     }
