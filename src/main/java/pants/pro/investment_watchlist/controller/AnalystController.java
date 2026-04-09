@@ -14,7 +14,12 @@ import pants.pro.investment_watchlist.core.exceptions.EntityAlreadyExistsExcepti
 import pants.pro.investment_watchlist.core.exceptions.EntityInvalidArgumentException;
 import pants.pro.investment_watchlist.dto.AnalystInsertDTO;
 import pants.pro.investment_watchlist.dto.AnalystReadOnlyDTO;
+import pants.pro.investment_watchlist.dto.FirmReadOnlyDTO;
+import pants.pro.investment_watchlist.model.static_data.Firm;
 import pants.pro.investment_watchlist.service.IAnalystService;
+import pants.pro.investment_watchlist.service.IFirmService;
+
+import java.util.List;
 
 
 @Controller
@@ -23,6 +28,7 @@ import pants.pro.investment_watchlist.service.IAnalystService;
 public class AnalystController {
 
     private final IAnalystService analystService;
+    private final IFirmService firmService;
 
     @GetMapping("/insert")
     public String getAnalystForm(Model model) {
@@ -56,5 +62,9 @@ public class AnalystController {
     @GetMapping("/success")
     public String analystSuccess(Model model) {
         return "analyst-success";
+    }
+
+    public List<FirmReadOnlyDTO> firms() {
+        return firmService.findAllFirmsSortedByName();
     }
 }

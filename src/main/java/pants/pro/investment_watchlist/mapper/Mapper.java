@@ -3,7 +3,9 @@ package pants.pro.investment_watchlist.mapper;
 import org.springframework.stereotype.Component;
 import pants.pro.investment_watchlist.dto.AnalystInsertDTO;
 import pants.pro.investment_watchlist.dto.AnalystReadOnlyDTO;
+import pants.pro.investment_watchlist.dto.FirmReadOnlyDTO;
 import pants.pro.investment_watchlist.model.Analyst;
+import pants.pro.investment_watchlist.model.static_data.Firm;
 
 @Component
 public class Mapper {
@@ -21,4 +23,10 @@ public class Mapper {
                 analyst.getFirm() != null ? analyst.getFirm().getName() : null
         );
     }
+
+    public FirmReadOnlyDTO toReadOnlyDTO(Firm firm) {
+        return new FirmReadOnlyDTO(firm.getId(), firm.getName());
+    }
+
+
 }
