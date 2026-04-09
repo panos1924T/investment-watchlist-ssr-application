@@ -23,6 +23,6 @@ public record AnalystInsertDTO(
 ) {
 
     public static AnalystInsertDTO empty() {
-        return new AnalystInsertDTO("", "", "");
+        return new AnalystInsertDTO("", "", "", 0L);
     }
 }

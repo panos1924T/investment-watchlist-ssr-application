@@ -46,9 +46,20 @@
 
         <div class="col-lg-6 min-height-100">
           <label for="email">Email:</label><br>
-          <input type="email" id="email" th:field="*{email}"/>
+          <input type="text" id="email" th:field="*{email}"/>
           <div th:if="${#fields.hasErrors('email')}">
             <p class="error" th:errors="*{email}"></p>
+          </div>
+        </div>
+
+        <div class="col-lg-6 min-height-100">
+          <label for="firm">Firm:</label><br>
+          <select name="" id="firm" th:field="*{firmId}">
+            <option value="" selected>Select Firm</option>
+            <option th:each="firm : ${firmReadOnlyDTO}" th:value="${firm.id}" th:text="${firm.name}"></option>
+          </select>
+          <div th:if="${#fields.hasErrors('firmId')}">
+            <p class="error" th:errors="*{firmId}"></p>
           </div>
         </div>
 

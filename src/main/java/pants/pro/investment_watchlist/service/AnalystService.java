@@ -25,7 +25,7 @@ public class AnalystService implements IAnalystService {
 
     @Override
     @Transactional(rollbackFor = {EntityAlreadyExistsException.class, EntityInvalidArgumentException.class})
-    public AnalystReadOnlyDTO saveAsset(AnalystInsertDTO dto) throws EntityAlreadyExistsException, EntityInvalidArgumentException {
+    public AnalystReadOnlyDTO saveAnalyst(AnalystInsertDTO dto) throws EntityAlreadyExistsException, EntityInvalidArgumentException {
         try {
             if (dto.email() != null && analystRepository.findByEmail(dto.email()).isPresent()) {
                 throw new EntityAlreadyExistsException("Analyst with email=" + dto.email() + " already exists.");
@@ -37,7 +37,7 @@ public class AnalystService implements IAnalystService {
             Analyst savedAnalyst = mapper.toAnalystEntity(dto);
             firm.addAnalyst(savedAnalyst);
             analystRepository.save(savedAnalyst);
-            log.info("Asset with ticker={} saved successfully!", dto.email());
+            log.info("Analyst with email={} saved successfully!", dto.email());
             return mapper.toReadOnlyDTO(savedAnalyst);
 
         } catch (EntityAlreadyExistsException e) {

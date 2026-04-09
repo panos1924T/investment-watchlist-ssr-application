@@ -7,6 +7,6 @@ import pants.pro.investment_watchlist.dto.AnalystInsertDTO;
 
 public interface IAnalystService {
 
-    AnalystReadOnlyDTO saveAsset(AnalystInsertDTO analystInsertDTO)
+    AnalystReadOnlyDTO saveAnalyst(AnalystInsertDTO analystInsertDTO)
         throws EntityAlreadyExistsException, EntityInvalidArgumentException;
 }
