@@ -4,21 +4,22 @@ import org.springframework.stereotype.Component;
 import pants.pro.investment_watchlist.dto.AnalystInsertDTO;
 import pants.pro.investment_watchlist.dto.AnalystReadOnlyDTO;
 import pants.pro.investment_watchlist.model.Analyst;
+import pants.pro.investment_watchlist.model.static_data.Firm;
 
 @Component
 public class Mapper {
 
     public Analyst toAnalystEntity(AnalystInsertDTO dto) {
-        return new Analyst(null, null, dto.firstname(), dto.lastname(), dto.email());
+        return new Analyst(null, null, dto.firstname(), dto.lastname(), dto.email(), null);
     }
 
     public AnalystReadOnlyDTO toReadOnlyDTO(Analyst analyst) {
         return new AnalystReadOnlyDTO(
                 analyst.getUuid().toString(),
-                analyst.getEmail(),
                 analyst.getFirstname(),
                 analyst.getLastname(),
-                analyst.getEmail()
+                analyst.getEmail(),
+                analyst.getFirm() != null ? analyst.getFirm().getName() : null
         );
     }
 }
