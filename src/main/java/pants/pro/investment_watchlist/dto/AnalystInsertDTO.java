@@ -2,6 +2,7 @@ package pants.pro.investment_watchlist.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record AnalystInsertDTO(
@@ -15,7 +16,10 @@ public record AnalystInsertDTO(
 
         @NotBlank(message = "Email must not be blank!")
         @Email(message = "Email must be a valid email address!")
-        String email
+        String email,
+
+        @NotNull(message = "Firm must not be null!")
+        Long firmId
 ) {
 
     public static AnalystInsertDTO empty() {
