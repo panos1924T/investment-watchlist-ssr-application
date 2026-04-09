@@ -10,31 +10,31 @@ import pants.pro.investment_watchlist.dto.AnalystInsertDTO;
 import pants.pro.investment_watchlist.dto.AnalystReadOnlyDTO;
 import pants.pro.investment_watchlist.mapper.Mapper;
 import pants.pro.investment_watchlist.model.Analyst;
-import pants.pro.investment_watchlist.repository.AssetRepository;
+import pants.pro.investment_watchlist.repository.AnalystRepository;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class AnalystService implements IAnalystService {
 
-    private final AssetRepository assetRepository;
+    private final AnalystRepository analystRepository;
     private final Mapper mapper;
 
     @Override
     @Transactional(rollbackFor = {EntityAlreadyExistsException.class, EntityInvalidArgumentException.class})
     public AnalystReadOnlyDTO saveAsset(AnalystInsertDTO dto) throws EntityAlreadyExistsException, EntityInvalidArgumentException {
         try {
-            if (dto.ticker() != null && assetRepository.findByTicker(dto.ticker()).isPresent()) {
-                throw new EntityAlreadyExistsException("Asset with ticker=" + dto.ticker() + " already exists.");
+            if (dto.email() != null && analystRepository.findByEmail(dto.email()).isPresent()) {
+                throw new EntityAlreadyExistsException("Analyst with email=" + dto.email() + " already exists.");
             }
 
-            Analyst savedAnalyst = mapper.toAssetEntity(dto);
-            assetRepository.save(savedAnalyst);
-            log.info("Asset with ticker={} saved successfully!", dto.ticker());
+            Analyst savedAnalyst = mapper.toAnalystEntity(dto);
+            analystRepository.save(savedAnalyst);
+            log.info("Asset with ticker={} saved successfully!", dto.email());
             return mapper.toReadOnlyDTO(savedAnalyst);
 
         } catch (EntityAlreadyExistsException e) {
-            log.error("Save failed for asset with ticker={}. Asset already exists!", dto.ticker());
+            log.error("Save failed for analyst with email={}. Analyst already exists!", dto.email());
             throw e;
         }
     }

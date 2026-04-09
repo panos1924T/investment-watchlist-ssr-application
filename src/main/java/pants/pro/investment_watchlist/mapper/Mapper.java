@@ -8,7 +8,7 @@ import pants.pro.investment_watchlist.model.Analyst;
 @Component
 public class Mapper {
 
-    public Analyst toAssetEntity(AnalystInsertDTO dto) {
+    public Analyst toAnalystEntity(AnalystInsertDTO dto) {
         return new Analyst(null, null, dto.firstname(), dto.lastname(), dto.email());
     }
 

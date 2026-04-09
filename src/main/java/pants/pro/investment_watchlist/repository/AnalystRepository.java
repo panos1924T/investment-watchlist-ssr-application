@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface AnalystRepository extends JpaRepository<Analyst, Long> {
 
-    Optional<Analyst> findByTicker(String ticker);
+    Optional<Analyst> findByEmail(String email);
 }
