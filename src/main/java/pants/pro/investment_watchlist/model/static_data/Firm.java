@@ -1,10 +1,12 @@
 package pants.pro.investment_watchlist.model.static_data;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import pants.pro.investment_watchlist.model.Analyst;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -19,5 +21,24 @@ public class Firm {
     @Column(unique = true)
     private String name;
 
+    @Getter(AccessLevel.PROTECTED)
+    @Setter(AccessLevel.PRIVATE)
+    @OneToMany(mappedBy = "firm", fetch = FetchType.LAZY)
+    private Set<Analyst> analysts = new HashSet<>();
 
+    public Set<Analyst> getAllAnalysts() {
+        return Collections.unmodifiableSet(analysts);
+    }
+
+    public void addAnalyst(Analyst analyst) {
+        if (analysts == null) analysts = new HashSet<>();
+        analysts.add(analyst);
+        analyst.setFirm(this);
+    }
+
+    public void removeAnalyst(Analyst analyst) {
+        if (analysts == null) return;
+        analysts.remove(analyst);
+        analyst.setFirm(null);
+    }
 }
