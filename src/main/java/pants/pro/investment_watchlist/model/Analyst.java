@@ -6,15 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.naming.ldap.UnsolicitedNotification;
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 @Table(name = "assets")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-public class Asset extends AbstractEntity{
+public class Analyst extends AbstractEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,14 +20,14 @@ public class Asset extends AbstractEntity{
     @Column(unique = true, nullable = false)
     private UUID uuid;
 
-    @Column(nullable = false, unique = true , length = 10)
-    private String ticker;
+    @Column(nullable = false, unique = true)
+    private String firstname;
 
-    @Column(nullable = false, precision = 18, scale = 2)
-    private BigDecimal purchasePrice;
+    @Column(nullable = false)
+    private String lastname;
 
-    @Column(nullable = false, precision = 18, scale = 2)
-    private BigDecimal quantity;
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @PrePersist
     public void initializeUuid() {

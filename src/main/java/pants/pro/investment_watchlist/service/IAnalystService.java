@@ -2,11 +2,11 @@ package pants.pro.investment_watchlist.service;
 
 import pants.pro.investment_watchlist.core.exceptions.EntityAlreadyExistsException;
 import pants.pro.investment_watchlist.core.exceptions.EntityInvalidArgumentException;
-import pants.pro.investment_watchlist.dto.AssetInsertDTO;
-import pants.pro.investment_watchlist.dto.AssetReadOnlyDTO;
+import pants.pro.investment_watchlist.dto.AnalystReadOnlyDTO;
+import pants.pro.investment_watchlist.dto.AnalystInsertDTO;
 
-public interface IAssetService {
+public interface IAnalystService {
 
-    AssetReadOnlyDTO saveAsset(AssetInsertDTO assetInsertDTO)
+    AnalystReadOnlyDTO saveAsset(AnalystInsertDTO analystInsertDTO)
         throws EntityAlreadyExistsException, EntityInvalidArgumentException;
 }

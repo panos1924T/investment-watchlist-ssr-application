@@ -1,6 +1,6 @@
 package pants.pro.investment_watchlist.dto;
 
-public record AssetTypeReadOnlyDTO(
+public record FirmReadOnlyDTO(
         Long id,
         String name
 ) {

@@ -9,50 +9,50 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pants.pro.investment_watchlist.dto.AssetInsertDTO;
-import pants.pro.investment_watchlist.dto.AssetReadOnlyDTO;
-import pants.pro.investment_watchlist.dto.AssetTypeReadOnlyDTO;
+import pants.pro.investment_watchlist.dto.AnalystInsertDTO;
+import pants.pro.investment_watchlist.dto.AnalystReadOnlyDTO;
+import pants.pro.investment_watchlist.dto.FirmReadOnlyDTO;
 
 import java.util.List;
 
 @Controller
 @RequestMapping ("/assets")
-public class AssetController {
+public class AnalystController {
 
     @GetMapping("/insert")
     public String getAssetForm(Model model) {
-        model.addAttribute("assetInsertDTO", AssetInsertDTO.empty());
+        model.addAttribute("assetInsertDTO", AnalystInsertDTO.empty());
 
-        return "asset-insert";
+        return "analyst-insert";
     }
 
     @PostMapping("/insert")
-    public String assetInsert(@Valid @ModelAttribute("assetInsertDTO")AssetInsertDTO assetInsertDTO,
+    public String assetInsert(@Valid @ModelAttribute("assetInsertDTO") AnalystInsertDTO analystInsertDTO,
                               BindingResult bindingResult, Model model,
                               RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
-            return "asset-insert";
+            return "analyst-insert";
         }
 
-        AssetReadOnlyDTO assetReadOnlyDTO = new AssetReadOnlyDTO("abc123", "Apple");
-        redirectAttributes.addFlashAttribute("assetReadOnlyDTO", assetReadOnlyDTO);
+        AnalystReadOnlyDTO analystReadOnlyDTO = new AnalystReadOnlyDTO("abc123", "Apple");
+        redirectAttributes.addFlashAttribute("assetReadOnlyDTO", analystReadOnlyDTO);
         return "redirect:/assets/success";
     }
 
     @ModelAttribute("assetTypeReadOnlyDTO")
-    public List<AssetTypeReadOnlyDTO> assetTypes() {
+    public List<FirmReadOnlyDTO> assetTypes() {
         return List.of(
-                new AssetTypeReadOnlyDTO(1L, "Stock"),
-                new AssetTypeReadOnlyDTO(2L, "ETF"),
-                new AssetTypeReadOnlyDTO(3L, "Bond"),
-                new AssetTypeReadOnlyDTO(4L, "Commodity"),
-                new AssetTypeReadOnlyDTO(5L, "Crypto")
+                new FirmReadOnlyDTO(1L, "Stock"),
+                new FirmReadOnlyDTO(2L, "ETF"),
+                new FirmReadOnlyDTO(3L, "Bond"),
+                new FirmReadOnlyDTO(4L, "Commodity"),
+                new FirmReadOnlyDTO(5L, "Crypto")
         );
     }
 
     @GetMapping("/success")
     public String assetSuccess(Model model) {
-        return "asset-success";
+        return "analyst-success";
     }
 }
