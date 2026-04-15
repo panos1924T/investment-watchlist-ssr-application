@@ -14,7 +14,7 @@ public record AnalystInsertDTO(
         @Size(min = 2, max = 50)
         String lastname,
 
-        @NotNull
+        @NotBlank
         @Email
         String email,
 
