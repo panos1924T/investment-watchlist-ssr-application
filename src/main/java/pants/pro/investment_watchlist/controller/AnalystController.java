@@ -64,6 +64,7 @@ public class AnalystController {
         return "analyst-success";
     }
 
+    @ModelAttribute("firmReadOnlyDTO")
     public List<FirmReadOnlyDTO> firms() {
         return firmService.findAllFirmsSortedByName();
     }
