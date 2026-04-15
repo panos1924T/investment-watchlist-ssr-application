@@ -3,7 +3,7 @@ package pants.pro.investment_watchlist.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +22,6 @@ import pants.pro.investment_watchlist.service.IAnalystService;
 import pants.pro.investment_watchlist.service.IFirmService;
 import pants.pro.investment_watchlist.validator.AnalystInsertValidator;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 
@@ -66,9 +65,13 @@ public class AnalystController {
 
     }
 
+    @GetMapping({"", "/"})
     public String getPaginatedAnalysts(@PageableDefault(size = 5, sort = "lastname") Pageable pageable,
                                        Model model) {
         Page<AnalystReadOnlyDTO> analystsPage = analystService.getPaginatedAnalysts(pageable);
+        model.addAttribute("analysts", analystsPage.getContent());
+        model.addAttribute("page", analystsPage);
+        return "analysts";
     }
 
     @GetMapping("/success")
