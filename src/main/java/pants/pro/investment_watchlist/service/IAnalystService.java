@@ -9,4 +9,6 @@ public interface IAnalystService {
 
     AnalystReadOnlyDTO saveAnalyst(AnalystInsertDTO analystInsertDTO)
         throws EntityAlreadyExistsException, EntityInvalidArgumentException;
+
+    boolean isAnalystExists(String uuid);
 }

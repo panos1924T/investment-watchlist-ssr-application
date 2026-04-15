@@ -46,4 +46,8 @@ public class AnalystService implements IAnalystService {
         }
     }
 
+    public boolean isAnalystExists(String email) {
+        return analystRepository.findByEmail(email).isPresent();
+    }
+
 }
