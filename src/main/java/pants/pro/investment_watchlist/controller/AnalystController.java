@@ -18,6 +18,7 @@ import pants.pro.investment_watchlist.dto.FirmReadOnlyDTO;
 import pants.pro.investment_watchlist.model.static_data.Firm;
 import pants.pro.investment_watchlist.service.IAnalystService;
 import pants.pro.investment_watchlist.service.IFirmService;
+import pants.pro.investment_watchlist.validator.AnalystInsertValidator;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class AnalystController {
 
     private final IAnalystService analystService;
     private final IFirmService firmService;
+    private final AnalystInsertValidator analystInsertValidator;
 
     @GetMapping("/insert")
     public String getAnalystForm(Model model) {
@@ -41,6 +43,8 @@ public class AnalystController {
     public String analystInsert(@Valid @ModelAttribute("analystInsertDTO") AnalystInsertDTO analystInsertDTO,
                               BindingResult bindingResult, Model model,
                               RedirectAttributes redirectAttributes) {
+
+        analystInsertValidator.validate(analystInsertDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "analyst-insert";
