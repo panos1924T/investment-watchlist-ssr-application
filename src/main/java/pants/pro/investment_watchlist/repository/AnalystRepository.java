@@ -4,8 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import pants.pro.investment_watchlist.model.Analyst;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface AnalystRepository extends JpaRepository<Analyst, Long> {
 
     Optional<Analyst> findByEmail(String email);
+
+    Optional<Analyst> findByUuid(UUID uuid);
 }
