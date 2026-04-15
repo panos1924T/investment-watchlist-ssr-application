@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "assets")
+@Table(name = "analysts")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 public class Analyst extends AbstractEntity{
