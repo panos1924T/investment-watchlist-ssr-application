@@ -48,11 +48,14 @@ public class AnalystService implements IAnalystService {
         }
     }
 
+    @Override
+    @Transactional(readOnly = true)
     public boolean isAnalystExists(String email) {
         return analystRepository.findByEmail(email).isPresent();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<AnalystReadOnlyDTO> getPaginatedAnalysts(Pageable pageable) {
         Page<Analyst> analystPage = analystRepository.findAll(pageable);
         log.debug("Get paginated returned successfully page={} and size={}", analystPage.getNumber(), analystPage.getSize());
