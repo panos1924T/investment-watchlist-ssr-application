@@ -14,7 +14,7 @@ public class Mapper {
         return new Analyst(null, null, dto.firstname(), dto.lastname(), dto.email(), null);
     }
 
-    public AnalystReadOnlyDTO toReadOnlyDTO(Analyst analyst) {
+    public AnalystReadOnlyDTO toAnalystReadOnlyDTO(Analyst analyst) {
         return new AnalystReadOnlyDTO(
                 analyst.getUuid().toString(),
                 analyst.getFirstname(),
@@ -24,7 +24,7 @@ public class Mapper {
         );
     }
 
-    public FirmReadOnlyDTO toReadOnlyDTO(Firm firm) {
+    public FirmReadOnlyDTO toFirmReadOnlyDTO(Firm firm) {
         return new FirmReadOnlyDTO(firm.getId(), firm.getName());
     }
 

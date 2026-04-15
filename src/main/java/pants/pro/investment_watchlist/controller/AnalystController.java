@@ -2,6 +2,9 @@ package pants.pro.investment_watchlist.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,11 +18,11 @@ import pants.pro.investment_watchlist.core.exceptions.EntityInvalidArgumentExcep
 import pants.pro.investment_watchlist.dto.AnalystInsertDTO;
 import pants.pro.investment_watchlist.dto.AnalystReadOnlyDTO;
 import pants.pro.investment_watchlist.dto.FirmReadOnlyDTO;
-import pants.pro.investment_watchlist.model.static_data.Firm;
 import pants.pro.investment_watchlist.service.IAnalystService;
 import pants.pro.investment_watchlist.service.IFirmService;
 import pants.pro.investment_watchlist.validator.AnalystInsertValidator;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 
@@ -61,6 +64,11 @@ public class AnalystController {
             return "analyst-insert";
         }
 
+    }
+
+    public String getPaginatedAnalysts(@PageableDefault(size = 5, sort = "lastname") Pageable pageable,
+                                       Model model) {
+        Page<AnalystReadOnlyDTO> analystsPage = analystService.getPaginatedAnalysts(pageable);
     }
 
     @GetMapping("/success")

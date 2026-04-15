@@ -21,7 +21,7 @@ public class FirmService implements IFirmService{
     public List<FirmReadOnlyDTO> findAllFirmsSortedByName() {
         return firmRepository.findAllByOrderByNameAsc()
                 .stream()
-                .map(mapper::toReadOnlyDTO)
+                .map(mapper::toFirmReadOnlyDTO)
                 .toList();
     }
 }

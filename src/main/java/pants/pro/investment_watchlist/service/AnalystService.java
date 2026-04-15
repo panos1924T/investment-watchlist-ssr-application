@@ -2,6 +2,8 @@ package pants.pro.investment_watchlist.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pants.pro.investment_watchlist.core.exceptions.EntityAlreadyExistsException;
@@ -38,7 +40,7 @@ public class AnalystService implements IAnalystService {
             firm.addAnalyst(savedAnalyst);
             analystRepository.save(savedAnalyst);
             log.info("Analyst with email={} saved successfully!", dto.email());
-            return mapper.toReadOnlyDTO(savedAnalyst);
+            return mapper.toAnalystReadOnlyDTO(savedAnalyst);
 
         } catch (EntityAlreadyExistsException e) {
             log.error("Save failed for analyst with email={}. Analyst already exists!", dto.email());
@@ -50,4 +52,10 @@ public class AnalystService implements IAnalystService {
         return analystRepository.findByEmail(email).isPresent();
     }
 
+    @Override
+    public Page<AnalystReadOnlyDTO> getPaginatedAnalysts(Pageable pageable) {
+        Page<Analyst> analystPage = analystRepository.findAll(pageable);
+        log.debug("Get paginated returned successfully page={} and size={}", analystPage.getNumber(), analystPage.getSize());
+        return analystPage.map(mapper::toAnalystReadOnlyDTO);
+    }
 }
