@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pants.pro.investment_watchlist.core.exceptions.EntityAlreadyExistsException;
 import pants.pro.investment_watchlist.core.exceptions.EntityInvalidArgumentException;
+import pants.pro.investment_watchlist.core.exceptions.EntityNotFoundException;
+import pants.pro.investment_watchlist.dto.AnalystEditDTO;
 import pants.pro.investment_watchlist.dto.AnalystInsertDTO;
 import pants.pro.investment_watchlist.dto.AnalystReadOnlyDTO;
 import pants.pro.investment_watchlist.dto.FirmReadOnlyDTO;
@@ -60,7 +62,6 @@ public class AnalystController {
             model.addAttribute("errorMessage", e.getMessage());
             return "analyst-insert";
         }
-
     }
 
     @GetMapping({"", "/"})
@@ -74,7 +75,34 @@ public class AnalystController {
 
     @GetMapping("/edit/{uuid}")
     public String getAnalystEdit(@PathVariable UUID uuid, Model model) {
+        try {
+            AnalystEditDTO analystEditDTO = analystService.getAnalystByUuid(uuid);
+            model.addAttribute("analystEditDTO", analystEditDTO);
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
 
+        return "analyst-edit";
+    }
+
+    @PostMapping("/edit")
+    public String analystUpdate(@Valid @ModelAttribute("analystEditDTO") AnalystEditDTO analystEditDTO,
+                                BindingResult bindingResult, Model model,
+                                RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            return "teacher-edit";
+        }
+
+        try {
+            analystService.updateAnalyst(analystEditDTO);
+            redirectAttributes.addFlashAttribute("analystReadOnlyDTO", analystEditDTO);
+            return "redirect:/analysts/update-success";
+
+        } catch (EntityNotFoundException | EntityAlreadyExistsException | EntityInvalidArgumentException e) {
+            model.addAttribute("error-message", e.getMessage());
+            return "analyst-edit";
+        }
     }
 
     @GetMapping("/success")

@@ -69,12 +69,12 @@ public class AnalystService implements IAnalystService {
 
     @Override
     @Transactional(readOnly = true)
-    public AnalystReadOnlyDTO getAnalystByUuid(UUID uuid) throws EntityNotFoundException {
+    public AnalystEditDTO getAnalystByUuid(UUID uuid) throws EntityNotFoundException {
         try {
             Analyst analyst = analystRepository.findByUuid(uuid)
                     .orElseThrow(() -> new EntityNotFoundException("Analyst with uuid=" + uuid + " not found!"));
             log.debug("Get analyst with uuid={} returned successfully", uuid);
-            return mapper.toAnalystReadOnlyDTO(analyst);
+            return mapper.toAnalystEditDTO(analyst);
         } catch (EntityNotFoundException e) {
             log.error("Get analyst with uuid={} failed!", uuid, e);
             throw e;
