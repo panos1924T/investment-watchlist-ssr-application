@@ -105,6 +105,11 @@ public class AnalystController {
         }
     }
 
+    @GetMapping("/update-success")
+    public String analystUpdateSuccess() {
+        return "update-analyst-success";
+    }
+
     @GetMapping("/success")
     public String analystSuccess(Model model) {
         return "analyst-success";
