@@ -7,7 +7,6 @@ import pants.pro.investment_watchlist.dto.FirmReadOnlyDTO;
 import pants.pro.investment_watchlist.mapper.Mapper;
 import pants.pro.investment_watchlist.repository.FirmRepository;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service

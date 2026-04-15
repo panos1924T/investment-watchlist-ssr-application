@@ -28,5 +28,4 @@ public class Mapper {
         return new FirmReadOnlyDTO(firm.getId(), firm.getName());
     }
 
-
 }
