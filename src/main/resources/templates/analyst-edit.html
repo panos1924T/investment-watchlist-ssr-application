@@ -62,7 +62,7 @@
                     <label th:for="firm">Firm:</label><br>
                     <select th:field="*{firmId}">
                         <option value="" selected>Select Firm</option>
-                        <option th:each="firm : ${firmsReadOnlyDTO}"
+                        <option th:each="firm : ${firmReadOnlyDTO}"
                                 th:value="${firm.id}"
                                 th:text="${firm.name}"
                                 th:selected="${firm.id == analystEditDTO.firmId}"

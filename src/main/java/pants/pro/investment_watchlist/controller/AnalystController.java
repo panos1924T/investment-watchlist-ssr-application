@@ -91,7 +91,7 @@ public class AnalystController {
                                 RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
-            return "teacher-edit";
+            return "analyst-edit";
         }
 
         try {
