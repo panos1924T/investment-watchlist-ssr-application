@@ -19,6 +19,7 @@ import pants.pro.investment_watchlist.repository.AnalystRepository;
 import pants.pro.investment_watchlist.repository.FirmRepository;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -64,6 +65,20 @@ public class AnalystService implements IAnalystService {
         Page<Analyst> analystPage = analystRepository.findAll(pageable);
         log.debug("Get paginated returned successfully page={} and size={}", analystPage.getNumber(), analystPage.getSize());
         return analystPage.map(mapper::toAnalystReadOnlyDTO);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public AnalystReadOnlyDTO getAnalystByUuid(UUID uuid) throws EntityNotFoundException {
+        try {
+            Analyst analyst = analystRepository.findByUuid(uuid)
+                    .orElseThrow(() -> new EntityNotFoundException("Analyst with uuid=" + uuid + " not found!"));
+            log.debug("Get analyst with uuid={} returned successfully", uuid);
+            return mapper.toAnalystReadOnlyDTO(analyst);
+        } catch (EntityNotFoundException e) {
+            log.error("Get analyst with uuid={} failed!", uuid, e);
+            throw e;
+        }
     }
 
     @Override

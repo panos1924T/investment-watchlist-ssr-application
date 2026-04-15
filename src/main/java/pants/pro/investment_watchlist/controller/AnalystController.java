@@ -8,10 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pants.pro.investment_watchlist.core.exceptions.EntityAlreadyExistsException;
 import pants.pro.investment_watchlist.core.exceptions.EntityInvalidArgumentException;
@@ -23,6 +20,7 @@ import pants.pro.investment_watchlist.service.IFirmService;
 import pants.pro.investment_watchlist.validator.AnalystInsertValidator;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Controller
@@ -72,6 +70,11 @@ public class AnalystController {
         model.addAttribute("analysts", analystsPage.getContent());
         model.addAttribute("page", analystsPage);
         return "analysts";
+    }
+
+    @GetMapping("/edit/{uuid}")
+    public String getAnalystEdit(@PathVariable UUID uuid, Model model) {
+
     }
 
     @GetMapping("/success")
