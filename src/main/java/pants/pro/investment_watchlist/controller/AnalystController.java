@@ -95,8 +95,8 @@ public class AnalystController {
         }
 
         try {
-            analystService.updateAnalyst(analystEditDTO);
-            redirectAttributes.addFlashAttribute("analystReadOnlyDTO", analystEditDTO);
+            AnalystReadOnlyDTO readOnlyDTO = analystService.updateAnalyst(analystEditDTO);
+            redirectAttributes.addFlashAttribute("analystReadOnlyDTO", readOnlyDTO);
             return "redirect:/analysts/update-success";
 
         } catch (EntityNotFoundException | EntityAlreadyExistsException | EntityInvalidArgumentException e) {
