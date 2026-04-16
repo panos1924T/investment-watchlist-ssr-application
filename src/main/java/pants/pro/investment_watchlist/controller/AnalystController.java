@@ -19,6 +19,7 @@ import pants.pro.investment_watchlist.dto.AnalystReadOnlyDTO;
 import pants.pro.investment_watchlist.dto.FirmReadOnlyDTO;
 import pants.pro.investment_watchlist.service.IAnalystService;
 import pants.pro.investment_watchlist.service.IFirmService;
+import pants.pro.investment_watchlist.validator.AnalystEditValidator;
 import pants.pro.investment_watchlist.validator.AnalystInsertValidator;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class AnalystController {
     private final IAnalystService analystService;
     private final IFirmService firmService;
     private final AnalystInsertValidator analystInsertValidator;
+    private final AnalystEditValidator analystEditValidator;
 
     @GetMapping("/insert")
     public String getAnalystForm(Model model) {
@@ -89,6 +91,8 @@ public class AnalystController {
     public String analystUpdate(@Valid @ModelAttribute("analystEditDTO") AnalystEditDTO analystEditDTO,
                                 BindingResult bindingResult, Model model,
                                 RedirectAttributes redirectAttributes) {
+
+        analystEditValidator.validate(analystEditDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "analyst-edit";
