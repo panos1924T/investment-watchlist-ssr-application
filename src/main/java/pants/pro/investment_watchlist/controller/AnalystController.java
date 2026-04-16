@@ -137,6 +137,11 @@ public class AnalystController {
         }
     }
 
+    @GetMapping("/delete-success")
+    public String deleteSuccess() {
+        return "delete-analyst-success";
+    }
+
     @ModelAttribute("firmReadOnlyDTO")
     public List<FirmReadOnlyDTO> firms() {
         return firmService.findAllFirmsSortedByName();
