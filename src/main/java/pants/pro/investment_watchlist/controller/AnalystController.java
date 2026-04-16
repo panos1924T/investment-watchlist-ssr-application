@@ -122,6 +122,21 @@ public class AnalystController {
         return "analyst-success";
     }
 
+    @PostMapping("/delete/{uuid}")
+    public String deleteAnalyst(@PathVariable UUID uuid, Model model, RedirectAttributes redirectAttributes) {
+
+        try {
+
+            AnalystReadOnlyDTO readOnlyDTO = analystService.deleteAnalystByUuid(uuid);
+            redirectAttributes.addFlashAttribute("analystReadOnlyDTO", readOnlyDTO);
+            return "redirect:/analysts/delete-success";
+
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "analysts";
+        }
+    }
+
     @ModelAttribute("firmReadOnlyDTO")
     public List<FirmReadOnlyDTO> firms() {
         return firmService.findAllFirmsSortedByName();
