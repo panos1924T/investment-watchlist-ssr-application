@@ -12,7 +12,9 @@ import pants.pro.investment_watchlist.model.static_data.Firm;
 public class Mapper {
 
     public Analyst toAnalystEntity(AnalystInsertDTO dto) {
-        return new Analyst(null, null, dto.firstname(), dto.lastname(), dto.email(), null);
+        Analyst analyst = new Analyst(null, null, dto.firstname(), dto.lastname(), dto.email(), null);
+        analyst.setDeleted(false);
+        return analyst;
     }
 
     public AnalystReadOnlyDTO toAnalystReadOnlyDTO(Analyst analyst) {
