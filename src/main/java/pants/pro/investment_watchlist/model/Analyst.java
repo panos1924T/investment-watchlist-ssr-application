@@ -31,7 +31,7 @@ public class Analyst extends AbstractEntity{
     @Column(nullable = false, unique = true)
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "firm_id")
     private Firm firm;
 
