@@ -1,10 +1,11 @@
 package pants.pro.investment_watchlist.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor
@@ -20,4 +21,35 @@ public class Capability {
     private String name;
 
     private String description;
+
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.PROTECTED)
+    @ManyToMany(mappedBy = "capabilities", fetch = FetchType.LAZY)
+    private Set<Role> roles = new HashSet<>();
+
+    public Set<Role> getAllRoles() {
+        return Set.copyOf(roles);
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
+        role.getCapabilities().remove(this);
+    }
+
+    public void removeRole(Role role) {
+        roles.remove(role);
+        role.getCapabilities().remove(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Capability that = (Capability) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }

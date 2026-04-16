@@ -1,10 +1,12 @@
 package pants.pro.investment_watchlist.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor
@@ -19,5 +21,61 @@ public class Role {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.PROTECTED)
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+    private Set<User> users = new HashSet<>();
 
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.PROTECTED)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "role_capabilities",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "capability_id")
+    )
+    private Set<Capability> capabilities = new HashSet<>();
+
+    public Set<Capability> getAllCapabilities() {
+        return Set.copyOf(capabilities);
+    }
+
+    public Set<User> getAllUsers() {
+        return Set.copyOf(users);
+    }
+
+    public void addCapability(Capability capability) {
+        capabilities.add(capability);
+        capability.getRoles().add(this);
+    }
+
+    public void removeCapability(Capability capability) {
+        capabilities.remove(capability);
+        capability.getRoles().remove(this);
+    }
+
+    public void addUser(User user) {
+        users.add(user);
+        user.setRole(this);
+    }
+
+    public void removeUser(User user) {
+        users.remove(user);
+        user.setRole(null);
+    }
+
+    public void addUsers(Collection<User> users) {
+        users.forEach(this::addUser);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return Objects.equals(id, role.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }
