@@ -69,9 +69,12 @@ public class AnalystController {
     @GetMapping({"", "/"})
     public String getPaginatedAnalysts(@PageableDefault(size = 5, sort = "lastname") Pageable pageable,
                                        Model model) {
-        Page<AnalystReadOnlyDTO> analystsPage = analystService.getPaginatedAnalysts(pageable);
+
+        Page<AnalystReadOnlyDTO> analystsPage = analystService.getPaginatedAnalystsDeletedFalse(pageable);
+
         model.addAttribute("analysts", analystsPage.getContent());
         model.addAttribute("page", analystsPage);
+
         return "analysts";
     }
 

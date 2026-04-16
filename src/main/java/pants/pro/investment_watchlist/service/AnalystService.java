@@ -68,6 +68,32 @@ public class AnalystService implements IAnalystService {
     }
 
     @Override
+    public Page<AnalystReadOnlyDTO> getPaginatedAnalystsDeletedFalse(Pageable pageable) {
+        Page<Analyst> analystPage = analystRepository.findAllByDeletedFalse(pageable);
+        log.debug("Get paginated not deleted returned successfully page={} and size={}", analystPage.getNumber(), analystPage.getSize());
+        return analystPage.map(mapper::toAnalystReadOnlyDTO);
+    }
+
+    @Override
+    @Transactional(rollbackFor = EntityAlreadyExistsException.class)
+    public AnalystReadOnlyDTO deleteAnalystByUuid(UUID uuid) throws EntityNotFoundException {
+        try {
+
+            Analyst analyst = analystRepository.findByUuidAndDeletedFalse(uuid)
+                    .orElseThrow(() -> new EntityNotFoundException("Analyst with uuid=" + uuid + " not found!"));
+
+            analyst.softDelete();
+
+            log.info("Analyst with uuid={} deleted successfully!", uuid);
+            return mapper.toAnalystReadOnlyDTO(analyst);
+
+        } catch (EntityNotFoundException e) {
+            log.error("Delete failed for analyst with uuid={}. Analyst not found!", uuid, e);
+            throw e;
+        }
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public AnalystEditDTO getAnalystByUuid(UUID uuid) throws EntityNotFoundException {
         try {

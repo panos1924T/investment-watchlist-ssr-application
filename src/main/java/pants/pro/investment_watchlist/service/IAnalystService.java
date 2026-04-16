@@ -19,9 +19,12 @@ public interface IAnalystService {
     boolean isAnalystExists(String uuid);
 
     Page<AnalystReadOnlyDTO> getPaginatedAnalysts(Pageable pageable);
+    Page<AnalystReadOnlyDTO> getPaginatedAnalystsDeletedFalse(Pageable pageable);
 
     AnalystReadOnlyDTO updateAnalyst(AnalystEditDTO analystEditDTO)
         throws EntityNotFoundException, EntityAlreadyExistsException, EntityInvalidArgumentException;
 
     AnalystEditDTO getAnalystByUuid(UUID uuid) throws EntityNotFoundException;
+
+    AnalystReadOnlyDTO deleteAnalystByUuid(UUID uuid) throws EntityNotFoundException;
 }

@@ -1,5 +1,7 @@
 package pants.pro.investment_watchlist.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import pants.pro.investment_watchlist.model.Analyst;
 
@@ -11,4 +13,10 @@ public interface AnalystRepository extends JpaRepository<Analyst, Long> {
     Optional<Analyst> findByEmail(String email);
 
     Optional<Analyst> findByUuid(UUID uuid);
+
+    Optional<Analyst> findByEmailAndDeletedFalse(String email);
+
+    Optional<Analyst> findByUuidAndDeletedFalse(UUID uuid);
+
+    Page<Analyst> findAllByDeletedFalse(Pageable pageable);
 }
