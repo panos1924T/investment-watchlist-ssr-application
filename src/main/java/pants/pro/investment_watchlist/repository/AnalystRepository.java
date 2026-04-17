@@ -2,6 +2,7 @@ package pants.pro.investment_watchlist.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import pants.pro.investment_watchlist.model.Analyst;
 
@@ -18,5 +19,6 @@ public interface AnalystRepository extends JpaRepository<Analyst, Long> {
 
     Optional<Analyst> findByUuidAndDeletedFalse(UUID uuid);
 
+    @EntityGraph(attributePaths = {"region"})
     Page<Analyst> findAllByDeletedFalse(Pageable pageable);
 }
