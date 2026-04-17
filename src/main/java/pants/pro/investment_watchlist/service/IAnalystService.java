@@ -25,6 +25,7 @@ public interface IAnalystService {
         throws EntityNotFoundException, EntityAlreadyExistsException, EntityInvalidArgumentException;
 
     AnalystEditDTO getAnalystByUuid(UUID uuid) throws EntityNotFoundException;
+    AnalystEditDTO getAnalystByUuidDeletedFalse(UUID uuid) throws EntityNotFoundException;
 
     AnalystReadOnlyDTO deleteAnalystByUuid(UUID uuid) throws EntityNotFoundException;
 }

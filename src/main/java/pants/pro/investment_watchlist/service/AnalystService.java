@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pants.pro.investment_watchlist.core.exceptions.EntityAlreadyExistsException;
@@ -31,6 +32,7 @@ public class AnalystService implements IAnalystService {
     private final Mapper mapper;
 
     @Override
+    @PreAuthorize("hasAuthority('INSERT_ANALYST')")
     @Transactional(rollbackFor = {EntityAlreadyExistsException.class, EntityInvalidArgumentException.class})
     public AnalystReadOnlyDTO saveAnalyst(AnalystInsertDTO dto) throws EntityAlreadyExistsException, EntityInvalidArgumentException {
         try {
@@ -60,6 +62,7 @@ public class AnalystService implements IAnalystService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     @Transactional(readOnly = true)
     public Page<AnalystReadOnlyDTO> getPaginatedAnalysts(Pageable pageable) {
         Page<Analyst> analystPage = analystRepository.findAll(pageable);
@@ -68,6 +71,8 @@ public class AnalystService implements IAnalystService {
     }
 
     @Override
+    @PreAuthorize("hasAuthority('VIEW_ANALYSTS')")
+    @Transactional(readOnly = true)
     public Page<AnalystReadOnlyDTO> getPaginatedAnalystsDeletedFalse(Pageable pageable) {
         Page<Analyst> analystPage = analystRepository.findAllByDeletedFalse(pageable);
         log.debug("Get paginated not deleted returned successfully page={} and size={}", analystPage.getNumber(), analystPage.getSize());
@@ -75,7 +80,9 @@ public class AnalystService implements IAnalystService {
     }
 
     @Override
+
     @Transactional(rollbackFor = EntityAlreadyExistsException.class)
+    @PreAuthorize("hasAuthority('DELETE_ANALYST')")
     public AnalystReadOnlyDTO deleteAnalystByUuid(UUID uuid) throws EntityNotFoundException {
         try {
 
@@ -94,6 +101,7 @@ public class AnalystService implements IAnalystService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     @Transactional(readOnly = true)
     public AnalystEditDTO getAnalystByUuid(UUID uuid) throws EntityNotFoundException {
         try {
@@ -108,6 +116,22 @@ public class AnalystService implements IAnalystService {
     }
 
     @Override
+    @PreAuthorize("hasAuthority('EDIT_ANALYST')")
+    @Transactional
+    public AnalystEditDTO getAnalystByUuidDeletedFalse(UUID uuid) throws EntityNotFoundException{
+        try {
+            Analyst analyst = analystRepository.findByUuidAndDeletedFalse(uuid)
+                    .orElseThrow(() -> new EntityNotFoundException("Analyst with uuid=" + uuid + " not found!"));
+            log.debug("Get non deleted analyst with uuid={} returned successfully", uuid);
+            return mapper.toAnalystEditDTO(analyst);
+        } catch (EntityNotFoundException e) {
+            log.error("Get analyst with uuid={} failed!", uuid, e);
+            throw e;
+        }
+    }
+
+    @Override
+    @PreAuthorize("hasAuthority('EDIT_ANALYST')")
     @Transactional(rollbackFor = {EntityAlreadyExistsException.class, EntityInvalidArgumentException.class, EntityNotFoundException.class})
     public AnalystReadOnlyDTO updateAnalyst(AnalystEditDTO dto) throws EntityNotFoundException, EntityAlreadyExistsException, EntityInvalidArgumentException {
 

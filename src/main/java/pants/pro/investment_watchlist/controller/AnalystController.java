@@ -81,7 +81,8 @@ public class AnalystController {
     @GetMapping("/edit/{uuid}")
     public String getAnalystEdit(@PathVariable UUID uuid, Model model) {
         try {
-            AnalystEditDTO analystEditDTO = analystService.getAnalystByUuid(uuid);
+//            AnalystEditDTO analystEditDTO = analystService.getAnalystByUuid(uuid);
+            AnalystEditDTO analystEditDTO = analystService.getAnalystByUuidDeletedFalse(uuid);
             model.addAttribute("analystEditDTO", analystEditDTO);
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", e.getMessage());
