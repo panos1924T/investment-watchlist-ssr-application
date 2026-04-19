@@ -15,6 +15,10 @@ public record UserInsertDTO(
         String password,
 
         @NotNull
-        String roleId
+        Long roleId
 ) {
+
+    public static UserInsertDTO empty() {
+        return new UserInsertDTO("", "", 0L);
+    }
 }
