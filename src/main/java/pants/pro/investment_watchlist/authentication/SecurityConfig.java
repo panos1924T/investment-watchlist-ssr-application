@@ -7,16 +7,20 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration              // create a bean from a method
 @RequiredArgsConstructor
 @EnableMethodSecurity       // to enable @PreAuthorize annotation
 @EnableWebSecurity          // filter security
 public class SecurityConfig {
+
+    private final AuthenticationSuccessHandler authSuccessHandler;
+    private final AuthenticationFailureHandler authFailureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -40,8 +44,8 @@ public class SecurityConfig {
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
-//                        .successHandler(authSuccessHandler)
-//                        .failureHandler(authFailureHandler)
+                        .successHandler(authSuccessHandler)
+                        .failureHandler(authFailureHandler)
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout=")
