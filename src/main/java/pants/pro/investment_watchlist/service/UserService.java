@@ -41,6 +41,7 @@ public class UserService implements IUserService {
             Role role = roleRepository.findById(userInsertDTO.roleId())
                     .orElseThrow(() -> new EntityInvalidArgumentException("Role id=" + userInsertDTO.roleId() + " invalid!"));
             role.addUser(user);
+            userRepository.save(user);
             log.info("Save succeeded for user with username={}.", userInsertDTO.username());
             return mapper.toUserReadOnlyDTO(user);
 

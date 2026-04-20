@@ -52,7 +52,7 @@ public class UserController {
 
             UserReadOnlyDTO userReadOnlyDTO = userService.saveUser(userInsertDTO);
             redirectAttributes.addFlashAttribute("userReadOnlyDTO", userReadOnlyDTO);
-            return "redirect:/users/register-success";
+            return "redirect:/users/success";
 
 
         } catch (EntityAlreadyExistsException | EntityInvalidArgumentException e) {
@@ -62,7 +62,7 @@ public class UserController {
 
     }
 
-    @GetMapping("users-success")
+    @GetMapping("success")
     public String success(Model model) {
         return "user-success";
     }
