@@ -19,6 +19,6 @@ public interface AnalystRepository extends JpaRepository<Analyst, Long> {
 
     Optional<Analyst> findByUuidAndDeletedFalse(UUID uuid);
 
-    @EntityGraph(attributePaths = {"region"})
+    @EntityGraph(attributePaths = {"firm"})
     Page<Analyst> findAllByDeletedFalse(Pageable pageable);
 }
