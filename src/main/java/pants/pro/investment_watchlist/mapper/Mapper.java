@@ -3,6 +3,7 @@ package pants.pro.investment_watchlist.mapper;
 import org.springframework.stereotype.Component;
 import pants.pro.investment_watchlist.dto.*;
 import pants.pro.investment_watchlist.model.Analyst;
+import pants.pro.investment_watchlist.model.Role;
 import pants.pro.investment_watchlist.model.User;
 import pants.pro.investment_watchlist.model.static_data.Firm;
 
@@ -37,11 +38,15 @@ public class Mapper {
                 analyst.getFirm().getId());
     }
 
-    public User toUserEntityDTO(UserInsertDTO userInsertDTO) {
+    public User toUserEntity(UserInsertDTO userInsertDTO) {
         return new User(userInsertDTO.username(), userInsertDTO.password());
     }
 
     public UserReadOnlyDTO toUserReadOnlyDTO(User user) {
         return new UserReadOnlyDTO(user.getUuid().toString(), user.getUsername(), user.getRole().getName());
+    }
+
+    public RoleReadOnlyDTO toRoleReadOnlyDTO(Role role) {
+        return new RoleReadOnlyDTO(role.getId(), role.getName());
     }
 }
