@@ -1,9 +1,9 @@
 :root {
-    --color-white: #fff;
-    --color-blue-300: rgb(0, 101, 179);
-    --color-blue-dark: rgb(0, 51, 117);
-    --color-yellow: rgb(255, 221, 36);
-    --color-dark: #000;
+    --color-white: #E9EBF0;
+    --color-blue-300: rgb(74, 144, 226);   /* electric blue accent */
+    --color-blue-dark: #252535;
+    --color-yellow: rgb(122, 176, 234);
+    --color-dark: #1C1C28;
 }
 
 .outer {
