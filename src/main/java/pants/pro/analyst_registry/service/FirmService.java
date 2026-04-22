@@ -12,11 +12,18 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+/**
+ * Service implementation for retrieving firms and mapping them to read-only DTOs.
+ */
 public class FirmService implements IFirmService{
 
     private final FirmRepository firmRepository;
     private final Mapper mapper;
 
+    /**
+     * Returns all firms sorted by name.
+     * @return sorted list of firm view data.
+     */
     @Override
     public List<FirmReadOnlyDTO> findAllFirmsSortedByName() {
         return firmRepository.findAllByOrderByNameAsc()

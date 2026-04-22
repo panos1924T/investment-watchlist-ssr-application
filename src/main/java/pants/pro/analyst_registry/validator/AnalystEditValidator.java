@@ -12,15 +12,28 @@ import pants.pro.analyst_registry.service.IAnalystService;
 @Component
 @Slf4j
 @RequiredArgsConstructor
+/**
+ * Spring Validator that enforces email uniqueness during analyst updates.
+ */
 public class AnalystEditValidator implements Validator {
 
     private final IAnalystService analystService;
 
+    /**
+     * Checks whether this validator supports the given class.
+     * @param clazz clazz value.
+     * @return result value.
+     */
     @Override
     public boolean supports(Class<?> clazz) {
         return AnalystEditDTO.class == clazz;
     }
 
+    /**
+     * Validates the target object and registers errors.
+     * @param target target value.
+     * @param errors errors value.
+     */
     @Override
     public void validate(Object target, Errors errors) {
         AnalystEditDTO analystEditDTO = (AnalystEditDTO) target;

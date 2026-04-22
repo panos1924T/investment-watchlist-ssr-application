@@ -16,10 +16,21 @@ import java.io.IOException;
 
 @Component
 @Slf4j
+/**
+ * Authentication failure handler that logs attempts and redirects with error context.
+ */
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
+    /**
+     * Logs a failed login and redirects with an error flag.
+     * @param request HTTP request with login details.
+     * @param response HTTP response used for redirect.
+     * @param exception authentication failure details.
+     * @throws IOException if redirect fails.
+     * @throws ServletException if servlet handling fails.
+     */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,

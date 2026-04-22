@@ -7,6 +7,9 @@ import jakarta.validation.constraints.Size;
 
 import java.util.UUID;
 
+/**
+ * Input payload used to update an existing analyst record.
+ */
 public record AnalystEditDTO(
 
         @NotNull
@@ -28,6 +31,10 @@ public record AnalystEditDTO(
         Long firmId
 ) {
 
+    /**
+     * Returns an empty DTO used to initialize the edit form.
+     * @return empty analyst edit DTO.
+     */
     public static AnalystEditDTO empty() {
         return new AnalystEditDTO(null,"", "", "", 0L);
     }

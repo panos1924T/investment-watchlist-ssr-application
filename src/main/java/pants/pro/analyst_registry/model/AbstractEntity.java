@@ -17,6 +17,9 @@ import java.time.Instant;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+/**
+ * Base audited entity that provides creation/update timestamps and soft-delete state.
+ */
 public abstract class AbstractEntity {
 
     @CreatedDate
@@ -33,6 +36,9 @@ public abstract class AbstractEntity {
     @Column(name = "deleted_at", columnDefinition = "DATETIME")
     private Instant deletedAt;
 
+    /**
+     * Marks the entity as soft deleted and sets deletion timestamp.
+     */
     public void softDelete() {
         this.deleted = true;
         this.deletedAt = Instant.now();

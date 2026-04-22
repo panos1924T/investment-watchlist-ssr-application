@@ -17,11 +17,22 @@ import java.io.IOException;
 
 @Component
 @Slf4j
+/**
+ * Authentication success handler that restores saved requests or redirects to analysts.
+ */
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private final RequestCache requestCache = new HttpSessionRequestCache();
     private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
+    /**
+     * Redirects the user after a successful login.
+     * @param request HTTP request after authentication.
+     * @param response HTTP response used for redirect.
+     * @param authentication authenticated user details.
+     * @throws IOException if redirect fails.
+     * @throws ServletException if servlet handling fails.
+     */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,

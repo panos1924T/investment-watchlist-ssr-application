@@ -18,6 +18,9 @@ import pants.pro.analyst_registry.repository.UserRepository;
 @Slf4j
 @RequiredArgsConstructor
 @Service
+/**
+ * Service implementation for registering users with encoded passwords and roles.
+ */
 public class UserService implements IUserService {
 
     private final UserRepository userRepository;
@@ -25,6 +28,13 @@ public class UserService implements IUserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
 
+    /**
+     * Creates and persists a new user.
+     * @param userInsertDTO user registration data.
+     * @return saved user view data.
+     * @throws EntityAlreadyExistsException if username already exists.
+     * @throws EntityInvalidArgumentException if role id is invalid.
+     */
     @Override
     @Transactional(rollbackFor = {EntityAlreadyExistsException.class, EntityInvalidArgumentException.class})
     public UserReadOnlyDTO saveUser(UserInsertDTO userInsertDTO)

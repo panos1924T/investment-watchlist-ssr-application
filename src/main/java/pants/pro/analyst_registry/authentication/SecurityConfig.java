@@ -17,11 +17,20 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @RequiredArgsConstructor
 @EnableMethodSecurity       // to enable @PreAuthorize annotation
 @EnableWebSecurity          // filter security
+/**
+ * Configures HTTP security rules, login/logout behavior, and password encoding.
+ */
 public class SecurityConfig {
 
     private final AuthenticationSuccessHandler authSuccessHandler;
     private final AuthenticationFailureHandler authFailureHandler;
 
+    /**
+     * Builds the HTTP security filter chain for the application.
+     * @param http Spring Security HTTP configuration object.
+     * @return configured security filter chain.
+     * @throws Exception if security configuration fails.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -56,6 +65,10 @@ public class SecurityConfig {
 
     }
 
+    /**
+     * Creates the password encoder used for user passwords.
+     * @return BCrypt password encoder instance.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);

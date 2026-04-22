@@ -29,6 +29,9 @@ import java.util.UUID;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping ("/analysts")
+/**
+ * MVC controller for analyst create, list, edit, and delete workflows.
+ */
 public class AnalystController {
 
     private final IAnalystService analystService;
@@ -36,6 +39,11 @@ public class AnalystController {
     private final AnalystInsertValidator analystInsertValidator;
     private final AnalystEditValidator analystEditValidator;
 
+    /**
+     * Shows the analyst creation form.
+     * @param model MVC model used by the view.
+     * @return analyst insert page.
+     */
     @GetMapping("/insert")
     public String getAnalystForm(Model model) {
         model.addAttribute("analystInsertDTO", AnalystInsertDTO.empty());
@@ -43,6 +51,14 @@ public class AnalystController {
         return "analyst-insert";
     }
 
+    /**
+     * Creates a new analyst and redirects to the success page.
+     * @param analystInsertDTO submitted analyst form data.
+     * @param bindingResult validation result for submitted data.
+     * @param model MVC model used to show errors.
+     * @param redirectAttributes flash attributes for redirect messages.
+     * @return redirect to success page or the insert page on error.
+     */
     @PostMapping("/insert")
     public String analystInsert(@Valid @ModelAttribute("analystInsertDTO") AnalystInsertDTO analystInsertDTO,
                               BindingResult bindingResult, Model model,
@@ -66,6 +82,12 @@ public class AnalystController {
         }
     }
 
+    /**
+     * Shows the paginated analyst list.
+     * @param pageable pagination and sorting settings.
+     * @param model MVC model used by the list page.
+     * @return analysts list page.
+     */
     @GetMapping({"", "/"})
     public String getPaginatedAnalysts(@PageableDefault(size = 5, sort = "lastname") Pageable pageable,
                                        Model model) {
@@ -78,6 +100,12 @@ public class AnalystController {
         return "analysts";
     }
 
+    /**
+     * Loads analyst data and shows the edit form.
+     * @param uuid analyst identifier from the route.
+     * @param model MVC model used by the view.
+     * @return analyst edit page.
+     */
     @GetMapping("/edit/{uuid}")
     public String getAnalystEdit(@PathVariable UUID uuid, Model model) {
         try {
@@ -91,6 +119,14 @@ public class AnalystController {
         return "analyst-edit";
     }
 
+    /**
+     * Updates an existing analyst and redirects to success page.
+     * @param analystEditDTO submitted analyst update data.
+     * @param bindingResult validation result for submitted data.
+     * @param model MVC model used to show errors.
+     * @param redirectAttributes flash attributes for redirect messages.
+     * @return redirect to update success page or the edit page on error.
+     */
     @PostMapping("/edit")
     public String analystUpdate(@Valid @ModelAttribute("analystEditDTO") AnalystEditDTO analystEditDTO,
                                 BindingResult bindingResult, Model model,
@@ -113,16 +149,32 @@ public class AnalystController {
         }
     }
 
+    /**
+     * Shows the analyst update success page.
+     * @return update success page.
+     */
     @GetMapping("/update-success")
     public String analystUpdateSuccess() {
         return "update-analyst-success";
     }
 
+    /**
+     * Shows the analyst creation success page.
+     * @param model MVC model used by the view.
+     * @return create success page.
+     */
     @GetMapping("/success")
     public String analystSuccess(Model model) {
         return "analyst-success";
     }
 
+    /**
+     * Soft deletes an analyst and redirects to success page.
+     * @param uuid analyst identifier from the route.
+     * @param model MVC model used to show errors.
+     * @param redirectAttributes flash attributes for redirect messages.
+     * @return redirect to delete success page or back to list on error.
+     */
     @PostMapping("/delete/{uuid}")
     public String deleteAnalyst(@PathVariable UUID uuid, Model model, RedirectAttributes redirectAttributes) {
 
@@ -138,11 +190,19 @@ public class AnalystController {
         }
     }
 
+    /**
+     * Shows the analyst deletion success page.
+     * @return delete success page.
+     */
     @GetMapping("/delete-success")
     public String deleteSuccess() {
         return "delete-analyst-success";
     }
 
+    /**
+     * Provides firms for analyst form dropdowns.
+     * @return list of firms sorted by name.
+     */
     @ModelAttribute("firmReadOnlyDTO")
     public List<FirmReadOnlyDTO> firms() {
         return firmService.findAllFirmsSortedByName();

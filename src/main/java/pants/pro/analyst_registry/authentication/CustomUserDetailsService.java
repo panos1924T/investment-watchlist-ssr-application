@@ -9,10 +9,19 @@ import pants.pro.analyst_registry.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
+/**
+ * Loads application users from persistence for Spring Security authentication.
+ */
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    /**
+     * Loads a user by username for Spring Security.
+     * @param username username entered at login.
+     * @return user details used by Spring Security.
+     * @throws UsernameNotFoundException if username is not found.
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)

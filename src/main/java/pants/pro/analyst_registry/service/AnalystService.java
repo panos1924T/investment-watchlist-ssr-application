@@ -25,12 +25,22 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+/**
+ * Service implementation that enforces analyst business rules and persistence operations.
+ */
 public class AnalystService implements IAnalystService {
 
     private final AnalystRepository analystRepository;
     private final FirmRepository firmRepository;
     private final Mapper mapper;
 
+    /**
+     * Creates and persists a new analyst.
+     * @param dto analyst creation data.
+     * @return saved analyst view data.
+     * @throws EntityAlreadyExistsException if analyst email already exists.
+     * @throws EntityInvalidArgumentException if firm id is invalid.
+     */
     @Override
     @PreAuthorize("hasAuthority('INSERT_ANALYST')")
     @Transactional(rollbackFor = {EntityAlreadyExistsException.class, EntityInvalidArgumentException.class})
@@ -55,12 +65,22 @@ public class AnalystService implements IAnalystService {
         }
     }
 
+    /**
+     * Checks whether an analyst exists by email.
+     * @param email analyst email.
+     * @return true when an analyst with this email exists.
+     */
     @Override
     @Transactional(readOnly = true)
     public boolean isAnalystExists(String email) {
         return analystRepository.findByEmail(email).isPresent();
     }
 
+    /**
+     * Returns all analysts as a paginated result.
+     * @param pageable page and sort settings.
+     * @return page of analyst view data.
+     */
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional(readOnly = true)
@@ -70,6 +90,11 @@ public class AnalystService implements IAnalystService {
         return analystPage.map(mapper::toAnalystReadOnlyDTO);
     }
 
+    /**
+     * Returns active analysts as a paginated result.
+     * @param pageable page and sort settings.
+     * @return page of non-deleted analyst view data.
+     */
     @Override
     @PreAuthorize("hasAuthority('VIEW_ANALYSTS')")
     @Transactional(readOnly = true)
@@ -81,6 +106,12 @@ public class AnalystService implements IAnalystService {
 
     @Override
 
+    /**
+     * Soft deletes an analyst by UUID.
+     * @param uuid analyst UUID.
+     * @return deleted analyst view data.
+     * @throws EntityNotFoundException if analyst is not found.
+     */
     @Transactional(rollbackFor = EntityAlreadyExistsException.class)
     @PreAuthorize("hasAuthority('DELETE_ANALYST')")
     public AnalystReadOnlyDTO deleteAnalystByUuid(UUID uuid) throws EntityNotFoundException {
@@ -100,6 +131,12 @@ public class AnalystService implements IAnalystService {
         }
     }
 
+    /**
+     * Loads analyst edit data by UUID.
+     * @param uuid analyst UUID.
+     * @return analyst edit DTO.
+     * @throws EntityNotFoundException if analyst is not found.
+     */
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional(readOnly = true)
@@ -115,6 +152,12 @@ public class AnalystService implements IAnalystService {
         }
     }
 
+    /**
+     * Loads active analyst edit data by UUID.
+     * @param uuid analyst UUID.
+     * @return analyst edit DTO for non-deleted analyst.
+     * @throws EntityNotFoundException if analyst is not found.
+     */
     @Override
     @PreAuthorize("hasAuthority('EDIT_ANALYST')")
     @Transactional
@@ -130,6 +173,14 @@ public class AnalystService implements IAnalystService {
         }
     }
 
+    /**
+     * Updates an existing analyst.
+     * @param dto analyst update data.
+     * @return updated analyst view data.
+     * @throws EntityNotFoundException if analyst is not found.
+     * @throws EntityAlreadyExistsException if new email already exists.
+     * @throws EntityInvalidArgumentException if firm id is invalid.
+     */
     @Override
     @PreAuthorize("hasAuthority('EDIT_ANALYST')")
     @Transactional(rollbackFor = {EntityAlreadyExistsException.class, EntityInvalidArgumentException.class, EntityNotFoundException.class})
