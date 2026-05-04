@@ -11,10 +11,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  */
 public class AnalystRegistryApplication {
 
-	/**
-	 * Starts the application.
-	 * @param args args value.
-	 */
 	public static void main(String[] args) {
 		SpringApplication.run(AnalystRegistryApplication.class, args);
 	}

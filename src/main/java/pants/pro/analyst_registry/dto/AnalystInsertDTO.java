@@ -9,19 +9,19 @@ import jakarta.validation.constraints.Size;
  * Input payload used to create a new analyst record.
  */
 public record AnalystInsertDTO(
-        @NotNull
-        @Size(min = 2, max = 50)
+        @NotNull(message = "{NotNull.analyst.firstname}")
+        @Size(min = 2, max = 50, message = "{Size.analyst.firstname}")
         String firstname,
 
-        @NotNull
-        @Size(min = 2, max = 50)
+        @NotNull(message = "{NotNull.analystInsertDTO.lastname}")
+        @Size(min = 2, max = 50, message = "{Size.analyst.lastname}")
         String lastname,
 
-        @NotBlank
-        @Email
+        @NotBlank(message = "{NotBlank.analyst.email}")
+        @Email(message = "{Email.analyst.email}")
         String email,
 
-        @NotNull
+        @NotNull(message = "{NotNull.analyst.firmId}")
         Long firmId
 ) {
 
